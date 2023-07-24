@@ -1,12 +1,11 @@
-import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, SafeAreaView } from 'react-native';
 
 import { ChartIcon, MoneyIcon, UserIcon } from '../Icons';
 import { TabBarButton } from './TabBarButton';
 
 export function TabBar({ state, navigation }: any) {
   return (
-    <SafeAreaView edges={['bottom', 'right', 'left']} style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TabBarButton
         icon={ChartIcon}
         isSelected={state.index === 0}

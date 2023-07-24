@@ -16,6 +16,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<IUser | undefined>();
   const [token, setToken] = useState<string | undefined>();
   const [expiresIn, setExpiresIn] = useState<string | undefined>();
+  const [stakeHolder, setStakeHolder] = useState<string>();
 
   async function login(email: string, password: string) {
     const { status, data } = await AuthService.login(email, password);
@@ -27,6 +28,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       StorageHelper.setItem('token', data.token);
       StorageHelper.setItem('expiresIn', data.expiresIn);
     }
+  }
+
+  async function loginStakeHolder(stakeHolder: string) {
+    setStakeHolder(stakeHolder);
+    StorageHelper.setItem('stakeHolder', stakeHolder);
   }
 
   async function signUp(payload: ISignUpPayload) {
@@ -87,9 +93,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         token,
         setToken,
         login,
+        loginStakeHolder,
         signUp,
         logout,
         checkExpiresIn,
+        stakeHolder,
         isAuth,
       }}
     >

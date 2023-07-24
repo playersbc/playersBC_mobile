@@ -1,28 +1,58 @@
-import { StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
-
-import { BackIcon, Button, Header, IconButton, Title } from '../components';
+import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
+import { Button, Title } from '../components';
+import React, { useState } from 'react';
+import { Theme } from '../theme';
 import { useAuthContext } from '../contexts';
 
-type Props = {
-  navigation: any;
-};
+export function MenuScreen() {
+  const [isSelected, setSelection] = useState('');
+  const { loginStakeHolder, stakeHolder } = useAuthContext();
 
-export function MenuScreen({ navigation }: Props) {
-  const { logout } = useAuthContext();
+  console.log(stakeHolder)
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView style={styles.content}>
-          <Header
-            left={
-              <IconButton onPress={() => navigation.goBack()}>
-                <BackIcon height={18} />
-              </IconButton>
-            }
-          />
-          <Title>Configurações</Title>
-          <Button label="Sair" onPress={logout} />
+          <Title>Escolha qual Stakeholder realizar login</Title>
+          <View
+            onTouchStart={() => {
+              if (isSelected) {
+                return setSelection('');
+              }
+              setSelection('Players B.C.');
+            }}
+            style={styles.checkboxContainer}
+          >
+            <View style={styles.checkbox}>
+              <View
+                style={{
+                  backgroundColor: isSelected
+                    ? Theme.colors.primary
+                    : 'transparent',
+                  height: 10,
+                  width: 10,
+                  borderRadius: 50,
+                }}
+              />
+            </View>
+            <Text
+              style={[
+                styles.textCheck,
+                { color: isSelected ? Theme.colors.primary : '#525252' },
+              ]}
+            >
+              Players B.C.
+            </Text>
+          </View>
         </ScrollView>
+        <View style={{ padding: 20, marginBottom: 20 }}>
+          <Button
+            label="Fazer Login"
+            onPress={() => loginStakeHolder(isSelected)}
+            disabled={!isSelected}
+          />
+        </View>
       </SafeAreaView>
     </View>
   );
@@ -35,7 +65,26 @@ const styles = StyleSheet.create({
   safeArea: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
+  },
+  textCheck: {
+    fontSize: 15,
+    fontFamily: Theme.fontsFamily.display.regular,
+  },
+  checkboxContainer: {
+    paddingVertical: 20,
+    marginBottom: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  checkbox: {
+    borderRadius: 50,
+    height: 20,
+    width: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,.10)',
   },
   content: {
     padding: 20,

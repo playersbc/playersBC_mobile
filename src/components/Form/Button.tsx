@@ -1,14 +1,30 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
 import { Theme } from '../../theme';
 
 type Props = {
   label: string;
   onPress?: () => void;
+  disabled?: boolean;
+  style?: StyleProp<ViewStyle>;
 };
 
-export function Button({ label, onPress }: Props) {
+export function Button({ label, onPress, disabled = false, style }: Props) {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity
+      style={[
+        styles.container,
+        { backgroundColor: !disabled ? Theme.colors.primary : '#C1C1C1' },
+        style,
+      ]}
+      disabled={disabled}
+      onPress={onPress}
+    >
       <Text style={styles.text}>{label}</Text>
     </TouchableOpacity>
   );
@@ -19,7 +35,6 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 15,
     borderRadius: 10,
-    backgroundColor: Theme.colors.primary,
   },
   text: {
     textAlign: 'center',
