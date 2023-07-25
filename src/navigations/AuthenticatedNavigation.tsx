@@ -1,14 +1,15 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { MenuScreen } from '../screens';
+import { LoginStakeHolder, MenuScreen } from '../screens';
 import { StyleSheet } from 'react-native';
 import { Theme } from '../theme';
 import MenuIcon from '../components/Icons/MenuIcon';
 import { UserIcon } from '../components';
+import { useAuthContext } from '../contexts';
 
 const Drawer = createDrawerNavigator();
-const StakeHolder = 'PlayerBC';
 
 export function AuthenticatedNavigation() {
+  const { stakeHolder } = useAuthContext();
   return (
     <>
       <Drawer.Navigator
@@ -18,18 +19,24 @@ export function AuthenticatedNavigation() {
           headerLeftContainerStyle: { paddingLeft: 20 },
           headerRightContainerStyle: { paddingRight: 20 },
           headerStyle: styles.headerBackground,
-          headerTitle: `Olá, ${StakeHolder}`,
+          headerTitle: stakeHolder && `Olá, ${stakeHolder}`,
           headerTitleAlign: 'left',
           headerTitleStyle: styles.title,
         })}
         initialRouteName="Dashboard"
       >
         <Drawer.Screen
-          name="Dashboard"
+          name="LoginStakeHolder"
+          component={LoginStakeHolder}
+          options={{
+            drawerLabel: 'Login StakeHolder',
+          }}
+        />
+        <Drawer.Screen
+          name="Home"
           component={MenuScreen}
           options={{
-            drawerLabel: 'asdasd',
-            drawerActiveBackgroundColor: '#000',
+            drawerLabel: 'Home',
           }}
         />
       </Drawer.Navigator>

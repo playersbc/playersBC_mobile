@@ -4,10 +4,11 @@ export const Theme = {
   },
   fontsFamily: {
     display: {
-      light: 'Poppins_300Light',
-      regular: 'Poppins_400Regular',
-      medium: 'Poppins_500Medium',
-      bold: 'Poppins_700Bold',
+      light: 'Lexend_300Light',
+      regular: 'Lexend_400Regular',
+      medium: 'Lexend_500Medium',
+      semibold: 'Lexend_600SemiBold',
+      bold: 'Lexend_700Bold',
     },
   },
 };

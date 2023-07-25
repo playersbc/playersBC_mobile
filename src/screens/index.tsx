@@ -1,3 +1,4 @@
 export * from './LoginScreen';
 export * from './LoadingScreen';
-export * from './MenuScreen';
+export * from './LoginStakeHolder';
+export * from './HomeScreen';

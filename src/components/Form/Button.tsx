@@ -8,7 +8,7 @@ import {
 import { Theme } from '../../theme';
 
 type Props = {
-  label: string;
+  label: React.ReactNode;
   onPress?: () => void;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;

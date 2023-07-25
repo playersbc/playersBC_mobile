@@ -4,11 +4,14 @@ import React, { useState } from 'react';
 import { Theme } from '../theme';
 import { useAuthContext } from '../contexts';
 
-export function MenuScreen() {
+export function LoginStakeHolder({ navigation: { navigate } }) {
   const [isSelected, setSelection] = useState('');
-  const { loginStakeHolder, stakeHolder } = useAuthContext();
+  const { loginStakeHolder } = useAuthContext();
 
-  console.log(stakeHolder)
+  async function onLogin() {
+    loginStakeHolder(isSelected);
+    navigate('Home');
+  }
 
   return (
     <View style={styles.container}>
@@ -49,7 +52,7 @@ export function MenuScreen() {
         <View style={{ padding: 20, marginBottom: 20 }}>
           <Button
             label="Fazer Login"
-            onPress={() => loginStakeHolder(isSelected)}
+            onPress={onLogin}
             disabled={!isSelected}
           />
         </View>
