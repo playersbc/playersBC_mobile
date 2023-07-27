@@ -4,6 +4,8 @@ export const Theme = {
   },
   fontsFamily: {
     display: {
+      thin: 'Lexend_100Thin',
+      extraLight: 'Lexend_200ExtraLight',
       light: 'Lexend_300Light',
       regular: 'Lexend_400Regular',
       medium: 'Lexend_500Medium',

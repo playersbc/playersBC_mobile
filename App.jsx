@@ -1,5 +1,7 @@
 import {
   useFonts,
+  Lexend_100Thin,
+  Lexend_200ExtraLight,
   Lexend_300Light,
   Lexend_400Regular,
   Lexend_500Medium,
@@ -12,6 +14,8 @@ import { LoadingScreen } from './src/screens';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
+    Lexend_100Thin,
+    Lexend_200ExtraLight,
     Lexend_300Light,
     Lexend_400Regular,
     Lexend_500Medium,

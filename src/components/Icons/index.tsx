@@ -5,3 +5,5 @@ export * from './MoneyIcon';
 export * from './UserIcon';
 export * from './LogoBrasil';
 export * from './Lupa';
+export * from './SantosIcon';
+export * from './PsgIcon';

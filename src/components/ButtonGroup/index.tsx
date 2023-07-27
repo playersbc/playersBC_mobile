@@ -1,7 +1,7 @@
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { HomeEnum } from '../../interfaces';
 import { useHomeStore } from '../../stores';
-import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Theme } from '../../theme';
 
 type Props = {
@@ -14,9 +14,12 @@ export function ButtonGroup() {
   const { homeState, setHomeState } = useHomeStore();
 
   const Button = ({ label, active, onPress }: Props) => {
+    const style = active ? styles.textActive : styles.text;
     return (
-      <TouchableOpacity style={{ alignItems: 'center'}} onPress={onPress}>
-        <Text style={active ? styles.textActive : styles.text}>{label}</Text>
+      <TouchableOpacity style={{ alignItems: 'center' }} onPress={onPress}>
+        <Text onPress={onPress} style={style}>
+          {label}
+        </Text>
         {active && <View style={styles.underline} />}
       </TouchableOpacity>
     );
@@ -24,11 +27,11 @@ export function ButtonGroup() {
 
   return (
     <View style={styles.container}>
-      {Object.keys(HomeEnum).map((key) => {
+      {Object.keys(HomeEnum).map((key, index) => {
         const keyof = key as keyof typeof HomeEnum;
         return (
           <Button
-            key={keyof}
+            key={index}
             label={keyof}
             active={homeState === HomeEnum[keyof]}
             onPress={() => setHomeState(HomeEnum[keyof])}
@@ -62,6 +65,6 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.primary,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    width: '70%'
+    width: '70%',
   },
 });

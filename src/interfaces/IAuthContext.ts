@@ -6,7 +6,7 @@ export interface IAuthContext {
   setUser: (user: IUser | undefined) => void;
   token?: string;
   stakeHolder: string;
-  loginStakeHolder: (stakeHolder: string) => void;
+  loginStakeHolder: (stakeHolder: string | undefined) => Promise<void>;
   setToken: (token: string | undefined) => void;
   login: (email: string, password: string) => Promise<void>;
   signUp: (payload: ISignUpPayload) => Promise<void>;

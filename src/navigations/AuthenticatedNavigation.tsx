@@ -29,6 +29,7 @@ export function AuthenticatedNavigation() {
           name="LoginStakeHolder"
           component={LoginStakeHolder}
           options={{
+            headerTitle: '',
             drawerLabel: 'Login StakeHolder',
           }}
         />
@@ -36,6 +37,7 @@ export function AuthenticatedNavigation() {
           name="Home"
           component={MenuScreen}
           options={{
+            headerTitle: stakeHolder,
             drawerLabel: 'Home',
           }}
         />

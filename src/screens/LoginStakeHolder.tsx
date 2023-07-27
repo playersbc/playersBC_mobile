@@ -1,17 +1,23 @@
 import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
 import { Button, Title } from '../components';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Theme } from '../theme';
 import { useAuthContext } from '../contexts';
 
 export function LoginStakeHolder({ navigation: { navigate } }) {
   const [isSelected, setSelection] = useState('');
-  const { loginStakeHolder } = useAuthContext();
+  const { loginStakeHolder, stakeHolder } = useAuthContext();
 
   async function onLogin() {
     loginStakeHolder(isSelected);
     navigate('Home');
   }
+  
+  useEffect(() => {
+    if (stakeHolder) {
+      navigate('Home');
+    }
+  }, [stakeHolder]);
 
   return (
     <View style={styles.container}>

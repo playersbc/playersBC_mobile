@@ -6,11 +6,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Title } from '../components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Lupa, LogoBrasil } from '../components/Icons';
 import { ButtonGroup } from '../components/ButtonGroup';
+import { SectionsHome } from '../components/SectionsHome';
+import { useAuthContext } from '../contexts';
 
 export function MenuScreen({ navigation: { navigate } }) {
+  const { stakeHolder } = useAuthContext();
+
+  useEffect(() => {
+    if (!stakeHolder) {
+      navigate('LoginStakeHolder');
+    }
+  }, [stakeHolder]);
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -25,6 +35,7 @@ export function MenuScreen({ navigation: { navigate } }) {
             </View>
           </View>
           <ButtonGroup />
+          <SectionsHome />
         </ScrollView>
       </SafeAreaView>
     </View>
