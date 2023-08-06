@@ -12,9 +12,10 @@ type Props = {
   onPress?: () => void;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
+  loading?: boolean
 };
 
-export function Button({ label, onPress, disabled = false, style }: Props) {
+export function Button({ label, onPress, disabled = false, loading, style }: Props) {
   return (
     <TouchableOpacity
       style={[
@@ -25,7 +26,7 @@ export function Button({ label, onPress, disabled = false, style }: Props) {
       disabled={disabled}
       onPress={onPress}
     >
-      <Text style={styles.text}>{label}</Text>
+      <Text style={styles.text}>{loading ? "Carregando..." : label}</Text>
     </TouchableOpacity>
   );
 }

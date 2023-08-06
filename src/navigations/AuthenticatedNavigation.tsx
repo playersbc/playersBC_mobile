@@ -5,6 +5,7 @@ import { Theme } from '../theme';
 import MenuIcon from '../components/Icons/MenuIcon';
 import { UserIcon } from '../components';
 import { useAuthContext } from '../contexts';
+import { AddStakeHolderScreen } from '../screens/AddStakeHolderScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -39,6 +40,14 @@ export function AuthenticatedNavigation() {
           options={{
             headerTitle: stakeHolder,
             drawerLabel: 'Home',
+          }}
+        />
+        <Drawer.Screen
+          name="AddStakeHolder"
+          component={AddStakeHolderScreen}
+          options={{
+            headerTitle: stakeHolder,
+            drawerLabel: 'AddStakeHolder',
           }}
         />
       </Drawer.Navigator>

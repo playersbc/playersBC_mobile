@@ -7,7 +7,7 @@ export function AppNavigation() {
   const { isAuth, checkExpiresIn } = useAuthContext();
   return (
     <NavigationContainer onStateChange={() => checkExpiresIn()}>
-      {!isAuth ? <AuthenticatedNavigation /> : <UnauthenticatedNavigation />}
+      {isAuth ? <AuthenticatedNavigation /> : <UnauthenticatedNavigation />}
     </NavigationContainer>
   );
 }

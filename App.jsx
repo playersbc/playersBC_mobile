@@ -12,6 +12,7 @@ import { AppNavigation } from './src/navigations';
 import { AppContexts } from './src/contexts';
 import { LoadingScreen } from './src/screens';
 
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Lexend_100Thin,

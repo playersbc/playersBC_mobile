@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { DateTime } from 'luxon';
-
 import { StorageHelper } from '../helpers';
 import { IAuthContext, ISignUpPayload, IUser } from '../interfaces';
 import { setBearerToken } from '../providers';
@@ -19,27 +18,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [stakeHolder, setStakeHolder] = useState<string | undefined>();
 
   async function login(email: string, password: string) {
-    const { status, data } = await AuthService.login(email, password);
-    if (status === 200) {
+    try {
+      const { data } = await AuthService.login(email, password);
       setToken(data.token);
       setUser(data.user);
       setExpiresIn(data.expiresIn);
       await StorageHelper.setItem('user', data.user);
       await StorageHelper.setItem('token', data.token);
       await StorageHelper.setItem('expiresIn', data.expiresIn);
+    } catch (error) {
+      console.log(error)
     }
   }
 
   async function loginStakeHolder(stakeHolder: string) {
     await StorageHelper.setItem('stakeHolder', stakeHolder);
-    await StorageHelper.getItem('stakeHolder');
     setStakeHolder(stakeHolder);
   }
 
   async function signUp(payload: ISignUpPayload) {
-    const { status, data } = await AuthService.signUp(payload);
-    if (status === 201) {
-      setUser(data);
+    try {
+      await AuthService.signUp(payload);
+    } catch (error) {
+      console.log(error)
     }
   }
 

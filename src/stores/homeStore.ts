@@ -6,6 +6,6 @@ export interface HomeStoreState {
   setHomeState: (homeState: HomeEnum) => void;
 }
 export const useHomeStore = create<HomeStoreState>((set) => ({
-  homeState: HomeEnum.Aprovações,
+  homeState: HomeEnum.Sumário,
   setHomeState: (homeState) => set({ homeState }),
 }));

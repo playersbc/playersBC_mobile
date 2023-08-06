@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { StorageHelper } from '../helpers';
 
-export const Api = axios.create({ baseURL: 'http://localhost:8080/api' });
+export const Api = axios.create({ baseURL: 'https://playersbc.onrender.com/api' });
 
 Api.interceptors.response.use(
   function (value) {

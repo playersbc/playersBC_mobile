@@ -4,37 +4,33 @@ import {
   ScrollView,
   ImageBackground,
   SafeAreaView,
-  Text,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Title, TextInput, Button } from '../components';
 import { LoginResolver } from '../validations';
 import { useAuthContext } from '../contexts';
 import { Logo } from '../components/Logo';
+import { ISignUpPayload } from '../interfaces';
 import { useState } from 'react';
 
-type Form = {
-  email: string;
-  password: string;
-};
-
-export function LoginScreen({ navigation: { navigate } }) {
+export function SignInScreen({ navigation: { navigate } }) {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<Form>({ resolver: LoginResolver });
-  const { login } = useAuthContext();
+  } = useForm<ISignUpPayload>({ resolver: LoginResolver });
+  const { signUp } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false)
 
-  async function onSubmit(values: Form) {
+  async function onSubmit(values: ISignUpPayload) {
     setIsLoading(true)
-    await login(values.email, values.password);
+    await signUp(values)
     setIsLoading(false)
+    await goLogIn()
   }
 
-  async function goSign() {
-    navigate('SignIn');
+  async function goLogIn() {
+    await navigate('Login');
   }
 
   return (
@@ -45,7 +41,7 @@ export function LoginScreen({ navigation: { navigate } }) {
           style={styles.background}
         >
           <View style={{ paddingTop: 30, paddingLeft: 30 }}>
-            <Title color="#fff">Login</Title>
+            <Title color="#fff">Register</Title>
           </View>
           <Logo />
         </ImageBackground>
@@ -81,19 +77,19 @@ export function LoginScreen({ navigation: { navigate } }) {
               />
             )}
           />
-          <View style={{ marginBottom: 30 }}>
-            <Text
-              style={{
-                color: 'red',
-                flexDirection: 'row',
-                alignSelf: 'flex-end',
-              }}
-            >
-              Esqueceu sua senha?
-            </Text>
-          </View>
-          <Button label="Login" loading={isLoading} disabled={isLoading} onPress={handleSubmit(onSubmit)} />
-          <Button label="Register" onPress={goSign} disabled={isLoading} style={{ marginTop: 10 }} />
+          <Button
+            loading={isLoading}
+            disabled={isLoading}
+            label="Register"
+            onPress={handleSubmit(onSubmit)}
+            style={{ marginTop: 30 }}
+          />
+          <Button
+            label="Login"
+            onPress={goLogIn}
+            disabled={isLoading}
+            style={{ marginTop: 10 }}
+          />
         </ScrollView>
       </SafeAreaView>
     </View>

@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-const LoginScrema = yup.object({
+const LoginSchema = yup.object({
   email: yup
     .string()
     .email('Preencha um e-mail válido')
@@ -9,4 +9,4 @@ const LoginScrema = yup.object({
   password: yup.string().required('Preencha sua senha'),
 });
 
-export const LoginResolver = yupResolver(LoginScrema);
+export const LoginResolver = yupResolver(LoginSchema);
