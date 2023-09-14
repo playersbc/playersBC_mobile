@@ -1,24 +1,27 @@
 import { Controller, useForm } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
-import { IStakeholderStep3 } from "../../interfaces";
+import { IPlayerStep3 } from "../../interfaces";
 import { useStepStore } from "../../stores";
 import { Button, TextInput } from "../Form";
 import { Theme } from "../../theme";
-import { Stakeholder3Resolver } from "../../validations";
+import { Player3Resolver } from "../../validations";
 
 export function Step3() {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<IStakeholderStep3>({ resolver: Stakeholder3Resolver });
-  const { dataStakeholder, setDataStakeholder, setStep } = useStepStore()
+  } = useForm<IPlayerStep3>({ resolver: Player3Resolver });
+  const { dataPlayer, setDataPlayer, setStep } = useStepStore()
 
-  async function onSubmit(values: IStakeholderStep3) {
-    dataStakeholder.phone = values.phone
-    dataStakeholder.photo = values.photo
-    dataStakeholder.privateKey = values.privateKey
-    setDataStakeholder(dataStakeholder)
+  async function onSubmit(values: IPlayerStep3) {
+    dataPlayer.birth_date = values.birth_date
+    dataPlayer.birth_name = values.birth_name
+    dataPlayer.family_name = values.family_name
+    dataPlayer.first_name = values.first_name
+    dataPlayer.international_id = values.international_id
+    dataPlayer.language = values.language
+    setDataPlayer(dataPlayer)
     setStep(4)
   }
 
@@ -27,12 +30,14 @@ export function Step3() {
       <View style={{ gap: 4 }}>
         <Controller
           control={control}
-          name="phone"
+          name="international_id"
+          defaultValue={dataPlayer.international_id}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
-              <Text style={styles.text} children={'Telefone'} />
+              <Text style={styles.text} children={'FIFA ID'} />
               <TextInput
-                placeholder="Digite seu telefone"
+                placeholder="Ex: FF737373"
+                defaultValue={dataPlayer.international_id}
                 autoCapitalize="none"
                 onChangeText={onChange}
                 errors={errors}
@@ -43,12 +48,32 @@ export function Step3() {
         />
         <Controller
           control={control}
-          name="privateKey"
+          name="family_name"
+          defaultValue={dataPlayer.family_name}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
-              <Text style={styles.text} children={'Private Key'} />
+              <Text style={styles.text} children={'Family Name'} />
               <TextInput
-                placeholder="Digite sua private-key"
+                placeholder="Insira o nome da família"
+                autoCapitalize="none"
+                onChangeText={onChange}
+                defaultValue={dataPlayer.family_name}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          control={control}
+          name="first_name"
+          defaultValue={dataPlayer.first_name}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'First Name'} />
+              <TextInput
+                placeholder="Insira o primeiro nome"
+                defaultValue={dataPlayer.first_name}
                 autoCapitalize="none"
                 onChangeText={onChange}
                 errors={errors}
@@ -59,12 +84,50 @@ export function Step3() {
         />
         <Controller
           control={control}
-          name="photo"
+          name="birth_name"
+          defaultValue={dataPlayer.birth_name}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
-              <Text style={styles.text} children={'Foto'} />
+              <Text style={styles.text} children={'Birth Name'} />
               <TextInput
-                placeholder="Coloque sua foto"
+                placeholder="Insira o nome de nascimento"
+                defaultValue={dataPlayer.birth_name}
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          control={control}
+          name="language"
+          defaultValue={dataPlayer.language}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Language'} />
+              <TextInput
+                placeholder="Insira o idioma"
+                defaultValue={dataPlayer.language}
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          control={control}
+          name="birth_date"
+          defaultValue={dataPlayer.birth_date}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Data of Birth'} />
+              <TextInput
+                placeholder="Insira a data de nascimento"
+                defaultValue={dataPlayer.birth_date}
                 autoCapitalize="none"
                 onChangeText={onChange}
                 errors={errors}

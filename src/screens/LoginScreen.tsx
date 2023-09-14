@@ -75,6 +75,7 @@ export function LoginScreen({ navigation: { navigate } }) {
                 placeholder="Senha"
                 secureTextEntry
                 innerRef={ref}
+                autoCapitalize="none"
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -103,11 +104,11 @@ export function LoginScreen({ navigation: { navigate } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white"
   },
   safeArea: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
   },
   logoContainer: {
     width: '100%',

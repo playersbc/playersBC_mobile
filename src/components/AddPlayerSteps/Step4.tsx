@@ -1,70 +1,112 @@
-import { View, StyleSheet, FlatList, Text } from "react-native";
-import { useStepStore } from "../../stores";
-import { Button } from "../Form";
-import { Theme } from "../../theme";
-import { StakeHolderService } from "../../services";
-import { useState } from "react";
+import { Controller, useForm } from 'react-hook-form';
+import { View, Text, StyleSheet } from 'react-native';
+import { IPlayerStep4 } from '../../interfaces';
+import { useStepStore } from '../../stores';
+import { Button, TextInput } from '../Form';
+import { Theme } from '../../theme';
+import { useAuthContext } from '../../contexts';
 
 export function Step4() {
-  const { dataStakeholder: values, setStep } = useStepStore()
-  const [loading, setLoading]= useState(false)
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IPlayerStep4>();
+  const { dataPlayer, setDataPlayer, setStep } = useStepStore();
+  const { user } = useAuthContext();
 
-  const primeiraPartePK = values.privateKey.slice(0, 4);
-  const ultimaPartePK = values.privateKey.slice(-4);
-  const privateKey = `${primeiraPartePK}...${ultimaPartePK}`
-
-  const primeiraParte = values.address.slice(0, 4);
-  const ultimaParte = values.address.slice(-4);
-  const address = `${primeiraParte}...${ultimaParte}`
-
-  async function onSubmit() {
-    try {
-      setLoading(true)
-      await StakeHolderService.addStakeHolder(values)
-      setLoading(false)
-      setStep(5)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
+  async function onSubmit(values: IPlayerStep4) {
+    dataPlayer.phone = values.phone;
+    dataPlayer.photo = values.photo;
+    dataPlayer.privateKey = values.privateKey;
+    dataPlayer.address = values.address;
+    setDataPlayer(dataPlayer);
+    setStep(5);
   }
-
-  function Item({ item, index }) {
-    return (
-      <View key={index} style={styles.item}>
-        <Text style={styles.text}>{item.title}</Text>
-        <Text style={styles.subText}>{item.info}</Text>
-      </View>
-    )
-  }
-
-  const data = [
-    { title: 'Tipo', info: values.shareholderType },
-    { title: 'Nome', info: values.name },
-    { title: 'Pais', info: values.country },
-    { title: 'Estado', info: values.state },
-    { title: 'Email', info: values.email },
-    { title: 'Ativo', info: values.active },
-    { title: 'Status', info: values.status },
-    { title: 'Telefone', info: values.phone },
-    { title: 'Carteira', info: address },
-    { title: 'Private-key', info: privateKey },
-    { title: 'Foto', info: values.photo },
-  ]
 
   return (
     <View style={styles.content}>
-      <FlatList
-        style={styles.card}
-        columnWrapperStyle={{ gap: 50 }}
-        contentContainerStyle={{ gap: 10 }}
-        data={data}
-        renderItem={Item}
-        numColumns={3}
+      <View style={{ gap: 4 }}>
+        <Controller
+          control={control}
+          name="phone"
+          defaultValue={dataPlayer?.phone}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Phone'} />
+              <TextInput
+                placeholder="Indique o telefone"
+                defaultValue={dataPlayer?.phone}
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          control={control}
+          name="privateKey"
+          defaultValue={user?.privateKey}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Private Key'} />
+              <TextInput
+                placeholder="Digite o private key"
+                defaultValue={user?.privateKey}
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          control={control}
+          name="photo"
+          defaultValue={dataPlayer?.photo}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Inserir Foto'} />
+              <TextInput
+                placeholder="Insira a foto"
+                defaultValue={dataPlayer?.photo}
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          control={control}
+          name="address"
+          defaultValue={dataPlayer?.address}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Address'} />
+              <TextInput
+                placeholder="Digite o endereço do Player"
+                defaultValue={dataPlayer?.address}
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+      </View>
+      <Button
+        style={{ marginTop: 30 }}
+        label="Continuar"
+        onPress={handleSubmit(onSubmit)}
       />
-      <Button loading={loading} disabled={loading} label="Confirmar" onPress={onSubmit} />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -73,28 +115,16 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'space-between',
     flexDirection: 'column',
-    gap: 20
   },
   text: {
-    fontSize: 18,
-    fontFamily: Theme.fontsFamily.display.medium,
-    color: "#525252",
-  },
-  subText: {
     fontSize: 14,
-    fontFamily: Theme.fontsFamily.display.regular,
-    color: "#787878",
+    fontFamily: Theme.fontsFamily.display.medium,
+    color: '#525252',
+    marginBottom: 4,
   },
-  card: {
-    flex: 1,
-    backgroundColor: '#EEF2F3',
-    borderRadius: 10,
-    padding: 20,
+  anotherText: {
+    fontSize: 14,
+    fontFamily: Theme.fontsFamily.display.medium,
+    color: '#525252',
   },
-  item: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    gap: 5,
-  }
 });

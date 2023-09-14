@@ -2,11 +2,11 @@ import { Controller, useForm } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
 import { CheckBox } from "../Form/CheckBox";
 import { StatusIcon } from "../Icons/StatusIcon";
-import { IStakeholderStep2 } from "../../interfaces";
+import { IPlayerStep2 } from "../../interfaces";
 import { useState } from "react";
 import { useStepStore } from "../../stores";
 import { Button, TextInput } from "../Form";
-import { Stakeholder2Resolver } from "../../validations";
+import { Player2Resolver } from "../../validations";
 import { Theme } from "../../theme";
 
 export function Step2() {
@@ -14,17 +14,19 @@ export function Step2() {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<IStakeholderStep2>({ resolver: Stakeholder2Resolver });
-  const { dataStakeholder, setDataStakeholder, setStep } = useStepStore()
+  } = useForm<IPlayerStep2>({ resolver: Player2Resolver });
+  const { dataPlayer, setDataPlayer, setStep } = useStepStore()
   const [status, setStatus] = useState('green')
   const [active, setActive] = useState(false)
 
-  async function onSubmit(values: IStakeholderStep2) {
-    dataStakeholder.address = values.address
-    dataStakeholder.email = values.email
-    dataStakeholder.status = values.status
-    dataStakeholder.active = values.active
-    setDataStakeholder(dataStakeholder)
+  async function onSubmit(values: IPlayerStep2) {
+    dataPlayer.email = values.email
+    dataPlayer.status = values.status
+    dataPlayer.active = values.active
+    dataPlayer.birth_city = values.birth_city
+    dataPlayer.birth_country = values.birth_country
+    dataPlayer.birth_state = values.birth_state
+    setDataPlayer(dataPlayer)
     setStep(3)
   }
 
@@ -33,14 +35,14 @@ export function Step2() {
       <View style={{ gap: 4 }}>
         <Controller
           control={control}
-          name="email"
+          defaultValue={dataPlayer.birth_country}
+          name="birth_country"
           render={({ field: { onChange, ref, ...field } }) => (
             <>
-              <Text style={styles.text} children={'Email'} />
+              <Text style={styles.text} children={'Country of Birth'} />
               <TextInput
-                placeholder="Digite seu email"
-                keyboardType="email-address"
-                autoCapitalize="none"
+                placeholder="Insira o país de nascimento"
+                defaultValue={dataPlayer.birth_country}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -49,6 +51,64 @@ export function Step2() {
 
           )}
         />
+        <Controller
+          control={control}
+          name="birth_state"
+          defaultValue={dataPlayer.birth_state}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Region or State of Birth'} />
+              <TextInput
+                placeholder="Insira a região ou estado de nascimento"
+                onChangeText={onChange}
+                defaultValue={dataPlayer.birth_state}
+                errors={errors}
+                {...field}
+              />
+            </>
+
+          )}
+        />
+        <Controller
+          control={control}
+          name="birth_city"
+          defaultValue={dataPlayer.birth_city}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'City of birth'} />
+              <TextInput
+                placeholder="Insira a cidade de nascimento"
+                defaultValue={dataPlayer.birth_city}
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="email"
+          defaultValue={dataPlayer.email}
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Email'} />
+              <TextInput
+                placeholder="Digite seu email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                defaultValue={dataPlayer.email}
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+
+          )}
+        />
+
         <View>
           <Text style={styles.anotherText} children={'Ativo'} />
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingHorizontal: 50, gap: 20 }}>
@@ -66,6 +126,7 @@ export function Step2() {
             </CheckBox>
           </View>
         </View>
+
         <View>
           <Text style={styles.anotherText} children={'Status'} />
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 50 }}>
@@ -86,22 +147,6 @@ export function Step2() {
             />
           </View>
         </View>
-        <Controller
-          control={control}
-          name="address"
-          render={({ field: { onChange, ref, ...field } }) => (
-            <>
-              <Text style={styles.text} children={'Address do stakeholder'} />
-              <TextInput
-                placeholder="Digite a carteira do stakeholder"
-                onChangeText={onChange}
-                errors={errors}
-                {...field}
-              />
-            </>
-
-          )}
-        />
       </View>
       <Button style={{ marginTop: 30 }} label="Continuar" onPress={handleSubmit(onSubmit)} />
     </View>)

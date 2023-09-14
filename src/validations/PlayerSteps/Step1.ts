@@ -1,0 +1,13 @@
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const Player1 = yup.object({
+  type: yup.string().required('Preencha o tipo'),
+  name: yup.string().required('Preencha o nome'),
+  gender: yup.string().required('Preencha o genero'),
+  nationality: yup.string().required('Preencha a nacionalidade'),
+  country: yup.string().required('Preencha o pais'),
+  state: yup.string().required('Preencha o estado'),
+});
+
+export const Player1Resolver = yupResolver(Player1);

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Title } from '../components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Lupa, LogoBrasil } from '../components/Icons';
 import { ButtonGroup } from '../components/ButtonGroup';
 import { SectionsHome } from '../components/SectionsHome';
@@ -14,6 +14,7 @@ import { useAuthContext } from '../contexts';
 
 export function MenuScreen({ navigation: { navigate } }) {
   const { stakeHolder } = useAuthContext();
+  const [showSearch, setShowSearch] = useState(false)
 
   useEffect(() => {
     if (!stakeHolder) {
@@ -30,12 +31,12 @@ export function MenuScreen({ navigation: { navigate } }) {
             <View
               style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
             >
-              <TouchableOpacity children={<Lupa />} />
+              <TouchableOpacity children={<Lupa />} onPress={() => setShowSearch(!showSearch)} />
               <LogoBrasil />
             </View>
           </View>
           <ButtonGroup />
-          <SectionsHome />
+          <SectionsHome showSearch={showSearch} />
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -45,6 +46,7 @@ export function MenuScreen({ navigation: { navigate } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white"
   },
   safeArea: {
     width: '100%',

@@ -12,7 +12,7 @@ export function Step1() {
     formState: { errors },
     handleSubmit,
   } = useForm<IStakeholderStep1>({ resolver: Stakeholder1Resolver });
-  const { setDataStakeholder, setStep } = useStepStore()
+  const { setDataStakeholder, setStep, dataStakeholder } = useStepStore()
 
   async function onSubmit(values: IStakeholderStep1) {
     const transformedData = {
@@ -38,12 +38,14 @@ export function Step1() {
         <Controller
           control={control}
           name="type"
+          defaultValue={"international"}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Tipo'} />
               <TextInput
                 placeholder="Digite o tipo"
                 autoCapitalize="none"
+                defaultValue={"international"}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -54,12 +56,14 @@ export function Step1() {
         <Controller
           control={control}
           name="name"
+          defaultValue={dataStakeholder?.name}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Nome'} />
               <TextInput
                 placeholder="Digite o nome"
                 autoCapitalize="none"
+                defaultValue={dataStakeholder?.name}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -70,12 +74,14 @@ export function Step1() {
         <Controller
           control={control}
           name="country"
+          defaultValue={dataStakeholder?.country}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'País'} />
               <TextInput
                 placeholder="Escolha o país"
                 autoCapitalize="none"
+                defaultValue={dataStakeholder?.country}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -86,12 +92,14 @@ export function Step1() {
         <Controller
           control={control}
           name="state"
+          defaultValue={dataStakeholder?.state}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Estado'} />
               <TextInput
                 placeholder="Escolha o estado"
                 autoCapitalize="none"
+                defaultValue={dataStakeholder?.state}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}

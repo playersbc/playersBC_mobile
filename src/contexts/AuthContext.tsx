@@ -88,8 +88,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [stakeHolder, user, token]);
 
   const isAuth = useMemo(
-    () => !!user && !!token && !!stakeHolder,
-    [user, token, stakeHolder]
+    () => !!user && !!token,
+    [user, token]
   );
 
   return (

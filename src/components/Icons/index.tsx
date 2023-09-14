@@ -7,3 +7,7 @@ export * from './LogoBrasil';
 export * from './Lupa';
 export * from './SantosIcon';
 export * from './PsgIcon';
+export * from './TrashIcon';
+export * from './AddIcon';
+export * from './LupaFull';
+export * from './StakeholdersIcon';

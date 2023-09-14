@@ -1,24 +1,26 @@
 import { Controller, useForm } from "react-hook-form";
-import { IStakeholderStep1 } from "../../interfaces";
-import { Stakeholder1Resolver } from "../../validations";
+import { IPlayerStakeholder, IPlayerStep1 } from "../../interfaces";
 import { useStepStore } from "../../stores";
 import { Button, TextInput } from "../Form";
 import { View, Text, StyleSheet } from "react-native";
 import { Theme } from "../../theme";
+import { Player1Resolver } from "../../validations";
 
 export function Step1() {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<IStakeholderStep1>({ resolver: Stakeholder1Resolver });
-  const { setDataStakeholder, setStep } = useStepStore()
+  } = useForm<IPlayerStep1>({ resolver: Player1Resolver });
+  const { setDataPlayer, setStep } = useStepStore()
 
-  async function onSubmit(values: IStakeholderStep1) {
-    const transformedData = {
+  async function onSubmit(values: IPlayerStep1) {
+    const transformedData: IPlayerStakeholder = {
       country: values.country,
       name: values.name,
       state: values.state,
+      gender: values.gender,
+      nationality: values.nationality,
       address: undefined,
       email: undefined,
       active: false,
@@ -26,9 +28,18 @@ export function Step1() {
       phone: undefined,
       photo: undefined,
       privateKey: undefined,
+      birth_city: undefined,
+      birth_state: undefined,
+      birth_country: undefined,
+      birth_date: undefined,
+      birth_name: undefined,
+      family_name: undefined,
+      first_name: undefined,
+      international_id: undefined,
+      language: undefined,
       shareholderType: values.type.toLowerCase(),
     }
-    setDataStakeholder(transformedData)
+    setDataPlayer(transformedData)
     setStep(2)
   }
 
@@ -59,6 +70,38 @@ export function Step1() {
               <Text style={styles.text} children={'Nome'} />
               <TextInput
                 placeholder="Digite o nome"
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          control={control}
+          name="gender"
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Gender'} />
+              <TextInput
+                placeholder="Insira o gênero"
+                autoCapitalize="none"
+                onChangeText={onChange}
+                errors={errors}
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          control={control}
+          name="nationality"
+          render={({ field: { onChange, ref, ...field } }) => (
+            <>
+              <Text style={styles.text} children={'Nationality'} />
+              <TextInput
+                placeholder="Insira a nacionalidade"
                 autoCapitalize="none"
                 onChangeText={onChange}
                 errors={errors}

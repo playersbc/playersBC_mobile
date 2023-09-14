@@ -8,11 +8,12 @@ import {
 } from 'react-native';
 import { BackIcon } from '../components';
 import { Theme } from '../theme';
-import { StepperStakeholder } from '../components/AddStakeholderSteps';
 import { useStepStore } from '../stores';
 import { useEffect } from 'react';
+import { DisplaySteps } from '../components/DisplaySteps';
+import { StepperPlayer } from '../components/AddPlayerSteps';
 
-export function AddStakeHolderScreen({ navigation: { navigate } }) {
+export function AddPlayersScreen({ navigation: { navigate } }) {
   const { step, setStep } = useStepStore()
 
   async function stepBack() {
@@ -27,15 +28,17 @@ export function AddStakeHolderScreen({ navigation: { navigate } }) {
     <ScrollView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.subheader}>
-          <TouchableOpacity onPress={stepBack}>
-            <BackIcon fill='#525252' size={30} />
-          </TouchableOpacity>
-          <Text style={styles.subheaderText}>
-            Adicionar Stakeholder
-          </Text>
-          <View />
+          <View style={{ flexDirection: "row", gap: 12 }}>
+            <TouchableOpacity onPress={stepBack}>
+              <BackIcon size={24} />
+            </TouchableOpacity>
+            <Text style={styles.subheaderText}>
+              Adicionar Player
+            </Text>
+          </View>
+          <DisplaySteps />
         </View>
-        <StepperStakeholder navigate={navigate} />
+        <StepperPlayer navigate={navigate} />
       </SafeAreaView>
     </ScrollView>
   );
@@ -51,13 +54,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    borderBottomWidth: 1,
-    borderColor: '#C1C1C1',
+    paddingHorizontal: 25,
+    backgroundColor: Theme.colors.primary,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20
   },
   subheaderText: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: Theme.fontsFamily.display.medium,
+    color: "#fff"
   },
   safeArea: {
     width: '100%',

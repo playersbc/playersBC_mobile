@@ -22,8 +22,8 @@ export function Step2() {
   async function onSubmit(values: IStakeholderStep2) {
     dataStakeholder.address = values.address
     dataStakeholder.email = values.email
-    dataStakeholder.status = values.status
-    dataStakeholder.active = values.active
+    dataStakeholder.status = status
+    dataStakeholder.active = active
     setDataStakeholder(dataStakeholder)
     setStep(3)
   }
@@ -34,12 +34,14 @@ export function Step2() {
         <Controller
           control={control}
           name="email"
+          defaultValue={dataStakeholder?.email}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Email'} />
               <TextInput
                 placeholder="Digite seu email"
                 keyboardType="email-address"
+                defaultValue={dataStakeholder?.email}
                 autoCapitalize="none"
                 onChangeText={onChange}
                 errors={errors}
@@ -89,12 +91,14 @@ export function Step2() {
         <Controller
           control={control}
           name="address"
+          defaultValue={dataStakeholder?.address}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Address do stakeholder'} />
               <TextInput
                 placeholder="Digite a carteira do stakeholder"
                 onChangeText={onChange}
+                defaultValue={dataStakeholder?.address}
                 errors={errors}
                 {...field}
               />

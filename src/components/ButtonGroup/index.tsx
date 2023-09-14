@@ -16,7 +16,7 @@ export function ButtonGroup() {
   const Button = ({ label, active, onPress }: Props) => {
     const style = active ? styles.textActive : styles.text;
     return (
-      <TouchableOpacity style={{ alignItems: 'center' }} onPress={onPress}>
+      <TouchableOpacity style={{ alignItems: 'center' }}>
         <Text onPress={onPress} style={style}>
           {label}
         </Text>

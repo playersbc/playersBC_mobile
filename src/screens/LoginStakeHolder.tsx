@@ -12,7 +12,7 @@ export function LoginStakeHolder({ navigation: { navigate } }) {
     loginStakeHolder(isSelected);
     navigate('Home');
   }
-  
+
   useEffect(() => {
     if (stakeHolder) {
       navigate('Home');
@@ -70,6 +70,7 @@ export function LoginStakeHolder({ navigation: { navigate } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   safeArea: {
     width: '100%',

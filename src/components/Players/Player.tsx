@@ -1,15 +1,35 @@
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import { IPlayer } from '../../interfaces';
+import { IPlayerStakeholder } from '../../interfaces';
 import { Theme } from '../../theme';
 import { PsgIcon, SantosIcon } from '../Icons';
 import { ExitIcon } from '../Icons/ExitIcon';
 import { JoinIcon } from '../Icons/JoinIcon';
 import { StatusIcon } from '../Icons/StatusIcon';
 
-export function Player({ item }: { item: IPlayer }) {
+type Props = {
+  item: IPlayerStakeholder;
+  screen: string;
+  onPress: () => void;
+  index: number;
+};
+export function Player({ item, screen = 'home', onPress, index }: Props) {
+  const isPlayersScreen = screen === 'players';
+  const isHomeScreen = screen === 'home';
+  const isStakeholdersScreen = screen === 'stakeholders';
+  const primeiraParte = item.address.slice(0, 4);
+  const ultimaParte = item.address.slice(-4);
+  const address = `${primeiraParte}...${ultimaParte}`;
+
   return (
-    <TouchableOpacity style={styles.container}>
-      <Text style={styles.text} children={item.index} />
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      <Text
+        style={{
+          color: '#525252',
+          width: 20,
+          fontFamily: Theme.fontsFamily.display.regular,
+        }}
+        children={index + 1}
+      />
       <View style={styles.containerInfo}>
         <Image
           style={styles.playerImage}
@@ -24,19 +44,33 @@ export function Player({ item }: { item: IPlayer }) {
           </View>
         </View>
       </View>
-      <View style={styles.clubs}>
-        <View style={styles.club}>
-          <SantosIcon width={25} height={25} />
-          <Text style={styles.text} children={item.old_club} />
-          <ExitIcon />
-        </View>
-        <View style={styles.club}>
-          <PsgIcon width={25} height={25} />
-          <Text style={styles.text} children={item.new_club} />
-          <JoinIcon />
-        </View>
-      </View>
-      <StatusIcon status={item.status} />
+      {isHomeScreen ? (
+        <>
+          <View style={styles.clubs}>
+            <View style={styles.club}>
+              <SantosIcon width={25} height={25} />
+              <Text style={styles.text} children={item.old_club} />
+              <ExitIcon />
+            </View>
+            <View style={styles.club}>
+              <PsgIcon width={25} height={25} />
+              <Text style={styles.text} children={item.new_club} />
+              <JoinIcon />
+            </View>
+          </View>
+          <StatusIcon status={item.status} />
+        </>
+      ) : isPlayersScreen ? (
+        <>
+          <Text style={styles.email} children={item.email} />
+          <Text style={styles.text} children={item.onChainId} />
+        </>
+      ) : isStakeholdersScreen ? (
+        <>
+          <Text style={styles.text} children={item.shareholderType} />
+          <Text style={styles.text} children={address} />
+        </>
+      ) : null}
     </TouchableOpacity>
   );
 }
@@ -72,7 +106,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#525252',
-    fontFamily: Theme.fontsFamily.display.medium,
+    fontFamily: Theme.fontsFamily.display.regular,
   },
   hour: {
     fontFamily: Theme.fontsFamily.display.extraLight,
@@ -87,5 +121,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
+  },
+  email: {
+    fontFamily: Theme.fontsFamily.display.extraLight,
+    color: '#525252',
+    fontSize: 12,
   },
 });

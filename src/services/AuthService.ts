@@ -6,7 +6,7 @@ function login(email: string, password: string) {
 }
 
 function signUp(data: ISignUpPayload) {
-  return Api.post<IUser>('/v1/user', data);
+  return Api.post<IUser>('/v1/stakeholder', data);
 }
 
 export const AuthService = {

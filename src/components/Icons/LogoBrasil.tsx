@@ -37,4 +37,3 @@ export function LogoBrasil(props) {
     </Svg>
   );
 }
-

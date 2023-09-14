@@ -5,6 +5,7 @@ import { useStepStore } from "../../stores";
 import { Button, TextInput } from "../Form";
 import { Theme } from "../../theme";
 import { Stakeholder3Resolver } from "../../validations";
+import { useAuthContext } from "../../contexts";
 
 export function Step3() {
   const {
@@ -13,6 +14,7 @@ export function Step3() {
     handleSubmit,
   } = useForm<IStakeholderStep3>({ resolver: Stakeholder3Resolver });
   const { dataStakeholder, setDataStakeholder, setStep } = useStepStore()
+  const { user } = useAuthContext();
 
   async function onSubmit(values: IStakeholderStep3) {
     dataStakeholder.phone = values.phone
@@ -28,11 +30,13 @@ export function Step3() {
         <Controller
           control={control}
           name="phone"
+          defaultValue={dataStakeholder?.phone}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Telefone'} />
               <TextInput
                 placeholder="Digite seu telefone"
+                defaultValue={dataStakeholder?.phone}
                 autoCapitalize="none"
                 onChangeText={onChange}
                 errors={errors}
@@ -44,12 +48,13 @@ export function Step3() {
         <Controller
           control={control}
           name="privateKey"
+          defaultValue={user.privateKey}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Private Key'} />
               <TextInput
                 placeholder="Digite sua private-key"
-                autoCapitalize="none"
+                defaultValue={user.privateKey}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -60,12 +65,14 @@ export function Step3() {
         <Controller
           control={control}
           name="photo"
+          defaultValue={dataStakeholder?.photo}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Foto'} />
               <TextInput
                 placeholder="Coloque sua foto"
                 autoCapitalize="none"
+                defaultValue={dataStakeholder?.photo}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
