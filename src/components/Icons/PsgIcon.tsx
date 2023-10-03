@@ -1,16 +1,8 @@
 import Svg, { Circle, Defs, Pattern, Use, Image } from 'react-native-svg';
 
-export function PsgIcon(props) {
+export function PsgIcon({ size = 18 }: { size?: number }) {
   return (
-    <Svg
-      width={18}
-      height={18}
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      {...props}
-    >
+    <Svg width={size} height={size} viewBox="0 0 18 18" fill="none">
       <Circle cx={9} cy={9} r={9} fill="url(#pattern0)" />
       <Defs>
         <Pattern

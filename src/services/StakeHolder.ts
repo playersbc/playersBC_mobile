@@ -7,7 +7,6 @@ async function addStakeHolder(payload: IStakeholder) {
 }
 
 async function addPlayer(payload: IPlayerStakeholder) {
-  console.log(payload)
   return await Api.patch<IStakeholder>('/v1/players', payload);
 }
 

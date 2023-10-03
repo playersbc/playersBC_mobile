@@ -8,6 +8,11 @@ import {
   PlayersScreen,
   StakeholdersScreen,
   UserScreen,
+  PlayerScreen,
+  CreateTransferScreen,
+  AllTransfersScreen,
+  TransfersScreen,
+  OneTransferScreen,
 } from '../screens';
 import { StyleSheet } from 'react-native';
 import { Theme } from '../theme';
@@ -16,6 +21,7 @@ import { UserIcon } from '../components';
 import { useAuthContext } from '../contexts';
 import { AddStakeHolderScreen } from '../screens/AddStakeHolderScreen';
 import { useState } from 'react';
+import { SuccessScreen } from '../screens/SuccessScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -101,6 +107,15 @@ export function AuthenticatedNavigation() {
           listeners={{ drawerItemPress }}
         />
         <Drawer.Screen
+          name="Player"
+          component={PlayerScreen}
+          options={{
+            headerTitle: stakeHolder,
+            drawerLabel: 'Player',
+          }}
+          listeners={{ drawerItemPress }}
+        />
+        <Drawer.Screen
           name="AddUsers"
           component={AddUsersScreen}
           options={{
@@ -124,6 +139,51 @@ export function AuthenticatedNavigation() {
           options={{
             headerTitle: stakeHolder,
             drawerLabel: 'User',
+          }}
+          listeners={{ drawerItemPress }}
+        />
+        <Drawer.Screen
+          name="Transfers"
+          component={TransfersScreen}
+          options={{
+            headerTitle: stakeHolder,
+            drawerLabel: 'Transfers',
+          }}
+          listeners={{ drawerItemPress }}
+        />
+        <Drawer.Screen
+          name="CreateTransfer"
+          component={CreateTransferScreen}
+          options={{
+            headerTitle: stakeHolder,
+            drawerLabel: 'CreateTransfer',
+          }}
+          listeners={{ drawerItemPress }}
+        />
+        <Drawer.Screen
+          name="AllTransfers"
+          component={AllTransfersScreen}
+          options={{
+            headerTitle: stakeHolder,
+            drawerLabel: 'AllTransfers',
+          }}
+          listeners={{ drawerItemPress }}
+        />
+        <Drawer.Screen
+          name="OneTransfer"
+          component={OneTransferScreen}
+          options={{
+            headerTitle: stakeHolder,
+            drawerLabel: 'OneTransfer',
+          }}
+          listeners={{ drawerItemPress }}
+        />
+        <Drawer.Screen
+          name="Success"
+          component={SuccessScreen}
+          options={{
+            headerTitle: stakeHolder,
+            drawerLabel: 'Success',
           }}
           listeners={{ drawerItemPress }}
         />

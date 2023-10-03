@@ -1,10 +1,16 @@
 import Svg, { G, Path, Defs, ClipPath } from 'react-native-svg';
 
-export function StatusIcon({ status }: { status: string }) {
+export function StatusIcon({
+  status,
+  size = 25,
+}: {
+  status: string;
+  size?: number;
+}) {
   return (
     <>
       {status === 'green' ? (
-        <Svg width={25} height={25} viewBox="0 0 24 24" fill="none">
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
           <G clipPath="url(#clip0_1_988)">
             <Path
               d="M10 20c5.523 0 10-4.477 10-10S15.523 0 10 0 0 4.477 0 10s4.477 10 10 10z"
@@ -22,7 +28,7 @@ export function StatusIcon({ status }: { status: string }) {
           </Defs>
         </Svg>
       ) : status === 'red' ? (
-        <Svg width={25} height={25} viewBox="0 0 24 24" fill="none">
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
           <Path
             d="M21.369 18.446l-7.416-14.84a2.184 2.184 0 00-3.904 0l-7.416 14.84a2.176 2.176 0 001.952 3.152h14.832a2.175 2.175 0 001.952-3.152z"
             fill="#E21111"
@@ -33,7 +39,7 @@ export function StatusIcon({ status }: { status: string }) {
           />
         </Svg>
       ) : (
-        <Svg width={25} height={25} viewBox="0 0 24 24" fill="none">
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
           <Path
             d="M21.369 18.446l-7.416-14.84a2.184 2.184 0 00-3.904 0l-7.416 14.84a2.176 2.176 0 001.952 3.152h14.832a2.175 2.175 0 001.952-3.152z"
             fill="#FFD60A"

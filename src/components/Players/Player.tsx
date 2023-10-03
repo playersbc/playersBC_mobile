@@ -53,7 +53,7 @@ export function Player({ item, screen = 'home', onPress, index }: Props) {
               <ExitIcon />
             </View>
             <View style={styles.club}>
-              <PsgIcon width={25} height={25} />
+              <PsgIcon size={25} />
               <Text style={styles.text} children={item.new_club} />
               <JoinIcon />
             </View>

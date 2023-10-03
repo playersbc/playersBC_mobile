@@ -5,6 +5,15 @@ import { Theme } from "../../theme";
 import { StakeHolderService } from "../../services";
 import { useState } from "react";
 
+export function Item({ item, index }) {
+  return (
+    <View key={index} style={styles.item}>
+      <Text style={styles.text}>{item.title}</Text>
+      <Text style={styles.subText}>{item.info}</Text>
+    </View>
+  )
+}
+
 export function Step4() {
   const { dataStakeholder: values, setStep } = useStepStore()
   const [loading, setLoading]= useState(false)
@@ -27,15 +36,6 @@ export function Step4() {
       setLoading(false)
       console.log(error)
     }
-  }
-
-  function Item({ item, index }) {
-    return (
-      <View key={index} style={styles.item}>
-        <Text style={styles.text}>{item.title}</Text>
-        <Text style={styles.subText}>{item.info}</Text>
-      </View>
-    )
   }
 
   const data = [

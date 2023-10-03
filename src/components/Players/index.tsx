@@ -1,26 +1,37 @@
 import { Text, StyleSheet, ScrollView, TextInput, View } from 'react-native';
 import { Player } from './Player';
-import { IPlayerStakeholder } from '../../interfaces';
+import { IPlayerStakeholder, ITransfer } from '../../interfaces';
 import { useEffect, useState } from 'react';
 import { LupaFull } from '../Icons';
+import { PlayerTransfer } from './PlayerTransfer';
 
 type Props = {
   screen?: string;
   searchShow?: boolean;
-  players: IPlayerStakeholder[];
-  navigate?: (link: string, params: any) => void;
+  players: IPlayerStakeholder[] | ITransfer[];
+  navigate?: (link: string, params?: any) => void;
+  byName?: boolean;
+  link?: string;
 };
 
-export function Players({ screen, searchShow, players, navigate }: Props) {
+export function Players({
+  screen,
+  searchShow,
+  players,
+  navigate,
+  link,
+  byName = true,
+}: Props) {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState(players);
 
   const searchFilterFunction = (text: string) => {
     if (text) {
-      const newData = players.filter(function (item) {
+      const newData: any = players.filter(function (item) {
         const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const itemDataById = item.onChainId;
         const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
+        return itemData.indexOf(byName ? textData : itemDataById) > -1;
       });
       setFilteredDataSource(newData);
       setSearch(text);
@@ -50,15 +61,26 @@ export function Players({ screen, searchShow, players, navigate }: Props) {
       {filteredDataSource.length === 0 ? (
         <Text style={{ marginTop: 10 }}>Nenhum resultado!</Text>
       ) : (
-        filteredDataSource.map((item, index) => (
-          <Player
-            key={index}
-            item={item}
-            index={index}
-            screen={screen}
-            onPress={() => navigate(`User`, { _id: item.onChainId })}
-          />
-        ))
+        <>
+          {filteredDataSource.map((item, index) =>
+            screen === 'transfer' ? (
+              <PlayerTransfer
+                key={index}
+                item={item}
+                index={index}
+                onPress={() => navigate(link, { _id: item.onChainId })}
+              />
+            ) : (
+              <Player
+                key={index}
+                item={item}
+                index={index}
+                screen={screen}
+                onPress={() => navigate(`User`, { _id: item.onChainId })}
+              />
+            )
+          )}
+        </>
       )}
     </ScrollView>
   );

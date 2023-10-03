@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { IStakeholder } from '../interfaces/IStakeHolder';
-import { IPlayerStakeholder } from '../interfaces';
+import { IPlayerStakeholder, ITransfer, ITransferPayload } from '../interfaces';
 
 export interface useStepStore {
   step: number;
@@ -11,6 +11,8 @@ export interface useStepStore {
   setDataPlayer: (dataPlayer: IPlayerStakeholder | undefined) => void;
   dataUser: any;
   setDataUser: (dataUser: any) => void;
+  dataTransfer: ITransferPayload;
+  setDataTransfer: (dataTransfer: ITransferPayload) => void;
 }
 export const useStepStore = create<useStepStore>((set) => ({
   step: 1,
@@ -21,4 +23,6 @@ export const useStepStore = create<useStepStore>((set) => ({
   setDataPlayer: (dataPlayer) => set({ dataPlayer }),
   dataUser: undefined,
   setDataUser: (dataUser) => set({ dataUser }),
+  dataTransfer: undefined,
+  setDataTransfer: (dataTransfer) => set({ dataTransfer }),
 }));
