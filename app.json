@@ -14,7 +14,9 @@
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "bundleIdentifier": "players-bc",
       "buildNumber": "1.0.0",
@@ -35,6 +37,9 @@
       "eas": {
         "projectId": "5faef617-069c-48f4-a4a7-48cd7901f016"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/5faef617-069c-48f4-a4a7-48cd7901f016"
     }
   }
 }

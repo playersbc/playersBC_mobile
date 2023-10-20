@@ -13,19 +13,24 @@ import type { ITransfer } from '../interfaces';
 import { Details } from '../components/Transfers/Details';
 import { HeaderStakeholder } from '../components/HeaderStakeholder';
 import { Passports } from '../components/Passports';
+import { useAuthContext } from '../contexts';
 
 export function OneTransferScreen({ navigation: { navigate }, route }) {
   const [_id] = useState(route.params._id);
   const [transfer, setTransfer] = useState<ITransfer>();
   const [loading, setLoading] = useState(false);
+  const { user } = useAuthContext();
 
   async function onSubmit() {
     try {
       setLoading(true);
-      await TransferService.acceptTransfer({
-        onChainId: transfer.onChainId,
-        privateKey: transfer.club_now,
-      });
+      await TransferService.acceptTransfer(
+        {
+          onChainId: transfer.onChainId,
+          privateKey: user?.privateKey,
+        },
+        user.shareholderType
+      );
       setLoading(false);
       await navigate('Success', {
         text: 'Transferência aprovada com sucesso!',
@@ -54,14 +59,16 @@ export function OneTransferScreen({ navigation: { navigate }, route }) {
       <HeaderStakeholder />
       <Details transfer={transfer} />
       <Passports />
-      <View style={styles.cardBtn}>
-        <Button
-          loading={loading}
-          disabled={loading}
-          onPress={onSubmit}
-          label={'Aprovar'}
-        />
-      </View>
+      {user?.address !== transfer?.club_asking && (
+        <View style={styles.cardBtn}>
+          <Button
+            loading={loading}
+            disabled={loading}
+            onPress={onSubmit}
+            label={'Aprovar'}
+          />
+        </View>
+      )}
     </ScrollView>
   );
 }

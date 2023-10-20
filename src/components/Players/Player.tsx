@@ -1,10 +1,10 @@
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { IPlayerStakeholder } from '../../interfaces';
 import { Theme } from '../../theme';
-import { PsgIcon, SantosIcon } from '../Icons';
 import { ExitIcon } from '../Icons/ExitIcon';
 import { JoinIcon } from '../Icons/JoinIcon';
 import { StatusIcon } from '../Icons/StatusIcon';
+import { ClubeIcon } from '../Icons/ClubeIcon';
 
 type Props = {
   item: IPlayerStakeholder;
@@ -33,14 +33,14 @@ export function Player({ item, screen = 'home', onPress, index }: Props) {
       <View style={styles.containerInfo}>
         <Image
           style={styles.playerImage}
-          source={require('../../../assets/neymar.png')}
+          source={require('../../../assets/jogador.png')}
         />
         <View>
-          <Text style={styles.text} children={item.name} />
+          <Text style={styles.text} children={item?.name} />
           <View style={styles.playerInfo}>
-            <Text style={styles.hour} children={item.hour} />
+            <Text style={styles.hour} children={item?.hour} />
             <View style={styles.point} />
-            <Text style={styles.hour} children={item.date} />
+            <Text style={styles.hour} children={item?.date} />
           </View>
         </View>
       </View>
@@ -48,26 +48,26 @@ export function Player({ item, screen = 'home', onPress, index }: Props) {
         <>
           <View style={styles.clubs}>
             <View style={styles.club}>
-              <SantosIcon width={25} height={25} />
-              <Text style={styles.text} children={item.old_club} />
+              <ClubeIcon width={60} height={60} />
+              <Text style={styles.text} children={item?.base_owner} />
               <ExitIcon />
             </View>
             <View style={styles.club}>
-              <PsgIcon size={25} />
-              <Text style={styles.text} children={item.new_club} />
+              <ClubeIcon width={60} height={60} />
+              <Text style={styles.text} children={item?.new_club} />
               <JoinIcon />
             </View>
           </View>
-          <StatusIcon status={item.status} />
+          <StatusIcon status={item?.status} />
         </>
       ) : isPlayersScreen ? (
         <>
-          <Text style={styles.email} children={item.email} />
-          <Text style={styles.text} children={item.onChainId} />
+          <Text style={styles.email} children={item?.email} />
+          <Text style={styles.text} children={item?.onChainId} />
         </>
       ) : isStakeholdersScreen ? (
         <>
-          <Text style={styles.text} children={item.shareholderType} />
+          <Text style={styles.text} children={item?.shareholderType} />
           <Text style={styles.text} children={address} />
         </>
       ) : null}

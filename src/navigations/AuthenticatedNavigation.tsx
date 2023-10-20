@@ -53,7 +53,7 @@ export function AuthenticatedNavigation() {
           headerTitleAlign: 'left',
           headerTitleStyle: styles.title,
         })}
-        initialRouteName="Dashboard"
+        initialRouteName="LoginStakeHolder"
       >
         <Drawer.Screen
           name="Home"

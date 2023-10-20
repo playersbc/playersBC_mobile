@@ -1,6 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
 import { View, Text, StyleSheet } from 'react-native';
-import { IPlayerStep4 } from '../../interfaces';
+import { IPlayerPayload } from '../../interfaces';
 import { useStepStore } from '../../stores';
 import { Button, TextInput } from '../Form';
 import { Theme } from '../../theme';
@@ -11,11 +11,11 @@ export function Step4() {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<IPlayerStep4>();
+  } = useForm<IPlayerPayload>();
   const { dataPlayer, setDataPlayer, setStep } = useStepStore();
   const { user } = useAuthContext();
 
-  async function onSubmit(values: IPlayerStep4) {
+  async function onSubmit(values: IPlayerPayload) {
     dataPlayer.phone = values.phone;
     dataPlayer.photo = values.photo;
     dataPlayer.privateKey = values.privateKey;

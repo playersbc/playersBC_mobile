@@ -21,8 +21,8 @@ export function AllTransfersScreen({ navigation: { navigate } }) {
   useEffect(() => {
     TransferService.getTransfers()
       .then(({ data }) => {
-        setTransfers(data.filter((e) => e.isPending));
-        setTransfersFinish(data.filter((e) => !e.isPending));
+        setTransfers(data.filter((e) => !e.isPending));
+        setTransfersFinish(data.filter((e) => e.isPending));
       })
       .catch((err) => console.log(err));
   }, []);

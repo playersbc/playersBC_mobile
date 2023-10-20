@@ -11,12 +11,14 @@ import { Players } from '../components/Players';
 import { useEffect, useState } from 'react';
 import { StakeHolderService } from '../services';
 import { IPlayerStakeholder } from '../interfaces';
+import { useAuthContext } from '../contexts';
 
 export function PlayersScreen({ navigation: { navigate } }) {
   const [players, setPlayers] = useState<IPlayerStakeholder[]>([]);
+  const { user } = useAuthContext();
 
   useEffect(() => {
-    StakeHolderService.getAllPlayers()
+    StakeHolderService.getAllPlayersByStakeholder(user.id)
       .then(({ data }) => setPlayers(data))
       .catch((err) => console.log(err));
   }, []);

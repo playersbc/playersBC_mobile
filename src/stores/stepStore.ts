@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import { IStakeholder } from '../interfaces/IStakeHolder';
-import { IPlayerStakeholder, ITransfer, ITransferPayload } from '../interfaces';
+import { IPlayerPayload, ITransferPayload } from '../interfaces';
 
 export interface useStepStore {
   step: number;
   setStep: (step: number) => void;
   dataStakeholder: IStakeholder | undefined;
   setDataStakeholder: (dataStakeholder: IStakeholder | undefined) => void;
-  dataPlayer: IPlayerStakeholder | undefined;
-  setDataPlayer: (dataPlayer: IPlayerStakeholder | undefined) => void;
+  dataPlayer: IPlayerPayload | undefined;
+  setDataPlayer: (dataPlayer: IPlayerPayload | undefined) => void;
   dataUser: any;
   setDataUser: (dataUser: any) => void;
   dataTransfer: ITransferPayload;

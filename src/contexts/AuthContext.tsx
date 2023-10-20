@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { DateTime } from 'luxon';
 import { StorageHelper } from '../helpers';
-import { IAuthContext, ISignUpPayload, IUser } from '../interfaces';
+import { IAuthContext, ISignUpPayload, IStakeholder, IUser } from '../interfaces';
 import { setBearerToken } from '../providers';
 import { AuthService } from '../services';
 
@@ -12,7 +12,7 @@ export function useAuthContext() {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<IUser | undefined>();
+  const [user, setUser] = useState<IStakeholder | undefined>();
   const [token, setToken] = useState<string | undefined>();
   const [expiresIn, setExpiresIn] = useState<string | undefined>();
   const [stakeHolder, setStakeHolder] = useState<string | undefined>();
@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await StorageHelper.setItem('token', data.token);
       await StorageHelper.setItem('expiresIn', data.expiresIn);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -40,16 +40,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await AuthService.signUp(payload);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   async function logout() {
-    await Promise.all([
-      await StorageHelper.removeItem('user'),
-      await StorageHelper.removeItem('token'),
-      await StorageHelper.removeItem('expiresIn'),
-    ]);
+    await StorageHelper.removeItem('user');
+    await StorageHelper.removeItem('token');
+    await StorageHelper.removeItem('expiresIn');
     setUser(undefined);
     setToken(undefined);
     setExpiresIn(undefined);
@@ -87,10 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loadDefaultData();
   }, [stakeHolder, user, token]);
 
-  const isAuth = useMemo(
-    () => !!user && !!token,
-    [user, token]
-  );
+  const isAuth = useMemo(() => !!user && !!token, [user, token]);
 
   return (
     <AuthContext.Provider

@@ -5,7 +5,13 @@ import { useHomeStore } from '../../stores';
 import { Players } from '../Players';
 import { Sumario } from '../Sumario';
 
-export function SectionsHome({ showSearch }: { showSearch: boolean }) {
+export function SectionsHome({
+  showSearch,
+  navigate,
+}: {
+  showSearch: boolean;
+  navigate: any;
+}) {
   const { homeState } = useHomeStore();
 
   const [players, setPlayers] = useState<IPlayerStakeholder[]>([]);
@@ -18,9 +24,11 @@ export function SectionsHome({ showSearch }: { showSearch: boolean }) {
 
   switch (homeState) {
     case HomeEnum.Aprovações:
-      return <Players players={players} screen='home' searchShow={showSearch} />;
+      return (
+        <Players players={players} screen="home" searchShow={showSearch} />
+      );
     case HomeEnum.Sumário:
-      return <Sumario />;
+      return <Sumario navigate={navigate} />;
     default:
       break;
   }

@@ -1,7 +1,7 @@
-import { IUser } from './IUser';
+import { IStakeholder } from './IStakeHolder';
 
 export interface ILoginResponse {
   token: string;
-  user: IUser;
+  user: IStakeholder;
   expiresIn: string;
 }

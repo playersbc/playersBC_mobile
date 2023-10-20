@@ -1,12 +1,31 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Theme } from '../../theme';
-import type { IPlayerStakeholder } from '../../interfaces';
+import type { IPlayerStakeholder, IStakeholder } from '../../interfaces';
 import { PersonIcon } from '../Icons/PersonIcon';
-import { PsgIcon } from '../Icons';
 import { StatusIcon } from '../Icons/StatusIcon';
 import { AtackIcon } from '../Icons/AtackIcon';
+import { ClubeIcon } from '../Icons/ClubeIcon';
+import { useState, useEffect } from 'react';
+import { StakeHolderService } from '../../services';
 
 export function Details({ player }: { player: IPlayerStakeholder }) {
+  const [baseOwner, setBaseOwner] = useState<IStakeholder>();
+
+  useEffect(() => {
+    async function getPlayer() {
+      const { base_owner } = player;
+      const { getStakeholderByAddress } = StakeHolderService;
+      try {
+        const { data } = await getStakeholderByAddress(base_owner);
+        setBaseOwner(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getPlayer();
+  }, [player]);
+
   return (
     <View style={styles.content}>
       <View style={styles.left}>
@@ -20,10 +39,8 @@ export function Details({ player }: { player: IPlayerStakeholder }) {
         <View style={styles.card}>
           <Text style={styles.title}>Time atual </Text>
           <View style={styles.descCard}>
-            <PsgIcon />
-            <Text style={styles.desc}>
-              {player?.old_club ? player?.old_club : 'PSG'}
-            </Text>
+            <ClubeIcon width={40} height={20} />
+            <Text style={styles.desc}>{baseOwner?.name}</Text>
           </View>
         </View>
       </View>

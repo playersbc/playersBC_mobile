@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import type { IPassport } from '../../interfaces';
 import { Theme } from '../../theme';
-import { PsgIcon } from '../Icons';
+import { ClubeIcon } from '../Icons/ClubeIcon';
 
 type Props = {
   item: IPassport;
@@ -20,8 +20,8 @@ export function Passport({ item, onPress, index }: Props) {
         children={index + 1}
       />
       <View style={styles.containerInfo}>
-        <PsgIcon size={30} />
-        <Text style={styles.text} children={item.club} />
+        <ClubeIcon width={40} height={40} />
+        <Text style={styles.text} children={"base1"} />
       </View>
       <View style={styles.year}>
         <Text style={styles.text}>{item.year}</Text>

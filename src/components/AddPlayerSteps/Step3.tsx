@@ -1,6 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
 import { View, Text, StyleSheet } from "react-native";
-import { IPlayerStep3 } from "../../interfaces";
+import { IPlayerPayload } from "../../interfaces";
 import { useStepStore } from "../../stores";
 import { Button, TextInput } from "../Form";
 import { Theme } from "../../theme";
@@ -11,10 +11,10 @@ export function Step3() {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<IPlayerStep3>({ resolver: Player3Resolver });
+  } = useForm<IPlayerPayload>();
   const { dataPlayer, setDataPlayer, setStep } = useStepStore()
 
-  async function onSubmit(values: IPlayerStep3) {
+  async function onSubmit(values: IPlayerPayload) {
     dataPlayer.birth_date = values.birth_date
     dataPlayer.birth_name = values.birth_name
     dataPlayer.family_name = values.family_name

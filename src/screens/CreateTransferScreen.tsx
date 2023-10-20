@@ -34,7 +34,7 @@ export function CreateTransferScreen({ navigation: { navigate }, route }) {
       setLoading(true);
       dataTransfer.player_address = player.address;
       console.log(dataTransfer);
-       await TransferService.createTransfer(dataTransfer);
+      await TransferService.createTransfer(dataTransfer);
       setLoading(false);
       await navigate('Success', {
         text: 'Transferência solicitada com sucesso!',
@@ -82,7 +82,7 @@ export function CreateTransferScreen({ navigation: { navigate }, route }) {
             <View style={styles.content}>
               <Image
                 style={styles.playerImage}
-                source={require('../../assets/neymar.png')}
+                source={require('../../assets/jogador.png')}
               />
               <View style={{ flexDirection: 'column', gap: 4, marginTop: -20 }}>
                 <Title fontSize={18} children={player?.name} />

@@ -5,8 +5,14 @@ async function createTransfer(payload: ITransferPayload) {
   return Api.post('/v1/transfers', payload);
 }
 
-async function acceptTransfer(payload: { onChainId: string; privateKey: string }) {
-  return Api.post('/v1/transfers/accept', payload);
+async function acceptTransfer(
+  payload: {
+    onChainId: string;
+    privateKey: string;
+  },
+  stakeholder: string
+) {
+  return Api.post(`/v1/transfers/accept/${stakeholder}`, payload);
 }
 
 async function getTransfers() {

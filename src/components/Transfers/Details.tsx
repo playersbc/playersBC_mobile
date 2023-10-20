@@ -1,14 +1,29 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Theme } from '../../theme';
-import type { ITransfer } from '../../interfaces';
+import type { IStakeholder, ITransfer } from '../../interfaces';
 import { PersonIcon } from '../Icons/PersonIcon';
-import { PsgIcon } from '../Icons';
-import { StatusIcon } from '../Icons/StatusIcon';
-import { AtackIcon } from '../Icons/AtackIcon';
 import { IDIcon } from '../Icons/IDIcon';
+import { useState, useEffect } from 'react';
+import { StakeHolderService } from '../../services';
 
 export function Details({ transfer }: { transfer: ITransfer }) {
-  console.log(transfer)
+  const [baseAsking, setBaseAsking] = useState<IStakeholder>();
+
+  useEffect(() => {
+    async function getPlayer() {
+      const { getStakeholderByAddress } = StakeHolderService;
+      try {
+        console.log(transfer?.club_asking)
+        const { data } = await getStakeholderByAddress(transfer?.club_asking);
+        console.log(data)
+        setBaseAsking(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getPlayer();
+  }, [transfer]);
   return (
     <View style={styles.content}>
       <View style={styles.cards}>
@@ -17,7 +32,7 @@ export function Details({ transfer }: { transfer: ITransfer }) {
             <Text style={styles.title}>Clube solicitante</Text>
             <View style={styles.descCard}>
               <PersonIcon />
-              <Text style={styles.desc}>{transfer?.name}</Text>
+              <Text style={styles.desc}>{baseAsking?.name}</Text>
             </View>
           </View>
           <View style={styles.card}>
@@ -44,7 +59,7 @@ export function Details({ transfer }: { transfer: ITransfer }) {
       </View>
       <View style={styles.card}>
         <Text style={styles.title}>Valor</Text>
-        <Text style={styles.desc}>R$ 20000.000,00</Text>
+        <Text style={styles.desc}>R$ {Number(transfer?.value).toLocaleString("pt-BR")}</Text>
       </View>
       <View style={styles.card}>
         <Text style={styles.title}>Contrato anexado</Text>

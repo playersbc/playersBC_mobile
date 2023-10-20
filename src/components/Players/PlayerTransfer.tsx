@@ -1,11 +1,11 @@
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import { IPlayerStakeholder } from '../../interfaces';
+import { IPlayerStakeholder, IStakeholder } from '../../interfaces';
 import { Theme } from '../../theme';
-import { PsgIcon } from '../Icons';
 import { ArrowRight } from '../Icons/ArrowRight';
 import { StatusIcon } from '../Icons/StatusIcon';
 import { useEffect, useState } from 'react';
 import { StakeHolderService } from '../../services';
+import { ClubeIcon } from '../Icons/ClubeIcon';
 
 type Props = {
   item: IPlayerStakeholder;
@@ -14,13 +14,22 @@ type Props = {
 };
 
 export function PlayerTransfer({ item, onPress, index }: Props) {
-  const [player, setPlayer] = useState<IPlayerStakeholder>();
+  const [baseOwner, setBaseOwner] = useState<IStakeholder>();
+  const { onChainId, name, base_owner, status } = item;
 
   useEffect(() => {
-    StakeHolderService.getPlayerByOnChainId(item.onChainId)
-      .then(({ data }) => setPlayer(data))
-      .catch((err) => console.log(err));
-  }, [item.address]);
+    async function getPlayer() {
+      const { getStakeholderByAddress } = StakeHolderService;
+      try {
+        const { data } = await getStakeholderByAddress(base_owner);
+        setBaseOwner(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getPlayer();
+  }, [item]);
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -28,24 +37,24 @@ export function PlayerTransfer({ item, onPress, index }: Props) {
       <View style={styles.containerInfo}>
         <Image
           style={styles.playerImage}
-          source={require('../../../assets/neymar.png')}
+          source={require('../../../assets/jogador.png')}
         />
         <View>
-          <Text style={styles.hour} children={player?.name} />
+          <Text style={styles.hour} children={name!} />
           <View style={styles.playerInfo}>
+            <Text style={styles.textTitle} children={item?.name} />
             <Text style={styles.textTitle} children={'BR'} />
           </View>
         </View>
       </View>
       <View style={styles.clubs}>
         <View style={styles.club}>
-          <PsgIcon size={30} />
-          <Text style={styles.text} children={item.old_club} />
-          <Text style={styles.hour} children={'PSG'} />
+          <ClubeIcon width={40} height={40} />
+          <Text style={styles.hour} children={baseOwner?.name} />
         </View>
       </View>
-      <Text style={styles.textTitle} children={item.onChainId} />
-      <StatusIcon status={item.status} />
+      <Text style={styles.textTitle} children={onChainId!} />
+      <StatusIcon status={status!} />
       <ArrowRight />
     </TouchableOpacity>
   );

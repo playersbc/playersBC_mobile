@@ -1,9 +1,9 @@
 import { ISignUpPayload } from './ISignUpPayload';
-import { IUser } from './IUser';
+import { IStakeholder } from './IStakeHolder';
 
 export interface IAuthContext {
-  user?: IUser;
-  setUser: (user: IUser | undefined) => void;
+  user?: IStakeholder;
+  setUser: (user: IStakeholder | undefined) => void;
   token?: string;
   stakeHolder: string;
   loginStakeHolder: (stakeHolder: string | undefined) => Promise<void>;

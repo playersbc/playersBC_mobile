@@ -13,7 +13,7 @@ export function Form({ player }) {
     formState: { errors },
     handleSubmit,
   } = useForm({ resolver: TransferResolver });
-  const { setDataTransfer, setStep } = useStepStore();
+  const { setDataTransfer, setStep, dataTransfer } = useStepStore();
   const { user } = useAuthContext();
 
   async function onSubmit(values: ITransferPayload) {
@@ -22,7 +22,7 @@ export function Form({ player }) {
       player_address: player.address,
       privateKey: user.privateKey,
       privateKeyFederal:
-        'b64b535ac37ad5908878758ea089036938999524563d452d18777fd2781c44b9',
+        '1df85bf1c3f2d4b1bf84eab2c41179df1f43ca902b946707240ad6c60c702965',
       isPending: true,
     });
     setStep(2);
@@ -33,6 +33,7 @@ export function Form({ player }) {
       <View style={{ gap: 4 }}>
         <Controller
           control={control}
+          defaultValue={dataTransfer?.type}
           name="type"
           render={({ field: { onChange, ref, ...field } }) => (
             <>
@@ -40,6 +41,7 @@ export function Form({ player }) {
               <TextInput
                 placeholder="Selecione o tipo de transferência"
                 autoCapitalize="none"
+                defaultValue={dataTransfer?.type}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -50,12 +52,14 @@ export function Form({ player }) {
         <Controller
           control={control}
           name="value"
+          defaultValue={dataTransfer?.value}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Valor da transferência'} />
               <TextInput
                 placeholder="Valor da transferência"
                 autoCapitalize="none"
+                defaultValue={dataTransfer?.value}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -66,12 +70,14 @@ export function Form({ player }) {
         <Controller
           control={control}
           name="date"
+          defaultValue={dataTransfer?.date}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Data da transferência'} />
               <TextInput
                 placeholder="05/05/2023"
                 autoCapitalize="none"
+                defaultValue={dataTransfer?.date}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -82,12 +88,14 @@ export function Form({ player }) {
         <Controller
           control={control}
           name="init_contract"
+          defaultValue={dataTransfer?.init_contract}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Inicio do contrato'} />
               <TextInput
                 placeholder="05/05/2023"
                 autoCapitalize="none"
+                defaultValue={dataTransfer?.init_contract}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -98,12 +106,14 @@ export function Form({ player }) {
         <Controller
           control={control}
           name="end_contract"
+          defaultValue={dataTransfer?.end_contract}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Fim do contrato'} />
               <TextInput
                 placeholder="05/05/2023"
                 autoCapitalize="none"
+                defaultValue={dataTransfer?.end_contract}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -114,11 +124,13 @@ export function Form({ player }) {
         <Controller
           control={control}
           name="salary"
+          defaultValue={dataTransfer?.salary}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Remuneração do Atleta'} />
               <TextInput
                 placeholder="R$"
+                defaultValue={dataTransfer?.salary}
                 autoCapitalize="none"
                 onChangeText={onChange}
                 errors={errors}
@@ -130,12 +142,14 @@ export function Form({ player }) {
         <Controller
           control={control}
           name="contract"
+          defaultValue={dataTransfer?.contract}
           render={({ field: { onChange, ref, ...field } }) => (
             <>
               <Text style={styles.text} children={'Anexar contrato'} />
               <TextInput
                 placeholder="Anexar contrato"
                 autoCapitalize="none"
+                defaultValue={dataTransfer?.contract}
                 onChangeText={onChange}
                 errors={errors}
                 {...field}

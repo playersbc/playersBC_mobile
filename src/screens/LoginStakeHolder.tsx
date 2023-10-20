@@ -3,10 +3,13 @@ import { Button, Title } from '../components';
 import React, { useEffect, useState } from 'react';
 import { Theme } from '../theme';
 import { useAuthContext } from '../contexts';
+import { StakeHolderService } from '../services';
+import { IStakeholder } from '../interfaces';
 
 export function LoginStakeHolder({ navigation: { navigate } }) {
   const [isSelected, setSelection] = useState('');
-  const { loginStakeHolder, stakeHolder } = useAuthContext();
+  const [stakes, setStakes] = useState<IStakeholder[]>([]);
+  const { loginStakeHolder, stakeHolder, user } = useAuthContext();
 
   async function onLogin() {
     loginStakeHolder(isSelected);
@@ -17,43 +20,86 @@ export function LoginStakeHolder({ navigation: { navigate } }) {
     if (stakeHolder) {
       navigate('Home');
     }
-  }, [stakeHolder]);
+    StakeHolderService.getAllStakeholdersByStakeholder(user.id)
+      .then(({ data }) => setStakes(data))
+      .catch((e) => console.log(e));
+  }, []);
+
+  const userName = user.name;
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView style={styles.content}>
           <Title>Escolha qual Stakeholder realizar login</Title>
-          <View
-            onTouchStart={() => {
-              if (isSelected) {
-                return setSelection('');
-              }
-              setSelection('Players B.C.');
-            }}
-            style={styles.checkboxContainer}
-          >
-            <View style={styles.checkbox}>
+          {stakes.length > 0 ? (
+            stakes.map((e, i) => (
               <View
-                style={{
-                  backgroundColor: isSelected
-                    ? Theme.colors.primary
-                    : 'transparent',
-                  height: 10,
-                  width: 10,
-                  borderRadius: 50,
-                }}
-              />
-            </View>
-            <Text
-              style={[
-                styles.textCheck,
-                { color: isSelected ? Theme.colors.primary : '#525252' },
-              ]}
+                key={i}
+                onTouchStart={() => setSelection(e.name)}
+                style={styles.checkboxContainer}
+              >
+                <View style={styles.checkbox}>
+                  <View
+                    style={{
+                      backgroundColor:
+                        isSelected === e.name
+                          ? Theme.colors.primary
+                          : 'transparent',
+                      height: 10,
+                      width: 10,
+                      borderRadius: 50,
+                    }}
+                  />
+                </View>
+                <Text
+                  style={[
+                    styles.textCheck,
+                    {
+                      color:
+                        isSelected === e.name
+                          ? Theme.colors.primary
+                          : '#525252',
+                    },
+                  ]}
+                >
+                  {e.name}
+                </Text>
+              </View>
+            ))
+          ) : (
+            <View
+              onTouchStart={() => setSelection(userName)}
+              style={styles.checkboxContainer}
             >
-              Players B.C.
-            </Text>
-          </View>
+              <View style={styles.checkbox}>
+                <View
+                  style={{
+                    backgroundColor:
+                      isSelected === userName
+                        ? Theme.colors.primary
+                        : 'transparent',
+                    height: 10,
+                    width: 10,
+                    borderRadius: 50,
+                  }}
+                />
+              </View>
+              <Text
+                style={[
+                  styles.textCheck,
+                  {
+                    color:
+                      isSelected === userName
+                        ? Theme.colors.primary
+                        : '#525252',
+                  },
+                ]}
+              >
+                {userName}
+              </Text>
+            </View>
+          )}
         </ScrollView>
         <View style={{ padding: 20, marginBottom: 20 }}>
           <Button
@@ -81,8 +127,7 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontsFamily.display.regular,
   },
   checkboxContainer: {
-    paddingVertical: 20,
-    marginBottom: 50,
+    paddingVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,

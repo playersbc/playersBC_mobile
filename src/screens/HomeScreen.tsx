@@ -7,14 +7,15 @@ import {
 } from 'react-native';
 import { Title } from '../components';
 import React, { useEffect, useState } from 'react';
-import { Lupa, LogoBrasil } from '../components/Icons';
+import { Lupa } from '../components/Icons';
 import { ButtonGroup } from '../components/ButtonGroup';
 import { SectionsHome } from '../components/SectionsHome';
 import { useAuthContext } from '../contexts';
+import { FGVIcon } from '../components/Icons/FGVIcon';
 
 export function MenuScreen({ navigation: { navigate } }) {
   const { stakeHolder } = useAuthContext();
-  const [showSearch, setShowSearch] = useState(false)
+  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     if (!stakeHolder) {
@@ -27,16 +28,19 @@ export function MenuScreen({ navigation: { navigate } }) {
       <SafeAreaView style={styles.safeArea}>
         <ScrollView style={styles.content}>
           <View style={styles.header}>
-            <Title fontSize={18} children={'Conf. Brasileira de Futebol'} />
+            <Title fontSize={18} children={'Fund. Getúlio Vargas'} />
             <View
               style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
             >
-              <TouchableOpacity children={<Lupa />} onPress={() => setShowSearch(!showSearch)} />
-              <LogoBrasil />
+              <TouchableOpacity
+                children={<Lupa />}
+                onPress={() => setShowSearch(!showSearch)}
+              />
+              <FGVIcon width={70} height={50} />
             </View>
           </View>
           <ButtonGroup />
-          <SectionsHome showSearch={showSearch} />
+          <SectionsHome showSearch={showSearch} navigate={navigate} />
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -46,7 +50,7 @@ export function MenuScreen({ navigation: { navigate } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: 'white',
   },
   safeArea: {
     width: '100%',

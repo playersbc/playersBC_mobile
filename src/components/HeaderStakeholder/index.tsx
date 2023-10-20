@@ -1,8 +1,10 @@
 import { View } from 'react-native';
 import { Title } from '../Title';
-import { PsgIcon } from '../Icons';
+import { ClubeIcon } from '../Icons/ClubeIcon';
+import { useAuthContext } from '../../contexts';
 
 export function HeaderStakeholder() {
+  const { stakeHolder } = useAuthContext();
   return (
     <View
       style={{
@@ -17,8 +19,8 @@ export function HeaderStakeholder() {
         borderTopWidth: 0.5,
       }}
     >
-      <Title fontSize={24}>Clube PSG</Title>
-      <PsgIcon size={30} />
+      <Title fontSize={24} children={stakeHolder} />
+      <ClubeIcon width={50} height={50} />
     </View>
   );
 }
