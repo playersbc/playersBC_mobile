@@ -1,9 +1,4 @@
-# ⚠️ Deprecation Notice
-##  This template is no longer maintained. If you are looking for expertise in React Native for your next project, feel free to [contact us](https://qubika.com/about-us/#contact-anchor).
-
-# React Native Template
-
-[![Moove It](https://circleci.com/gh/moove-it/react-native-template.svg?style=svg)](https://app.circleci.com/pipelines/github/moove-it/react-native-template?branch=master)
+# React Native
 
 This project aims to be a strong foundation for react-native applications. It provides a clear and organized structure, core dependencies, and boilerplate to jumpstart development.
 
